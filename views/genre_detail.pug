@@ -1,0 +1,82 @@
+extends layout
+
+block content
+  style.
+    body {
+      background-color: #e3d7ff; /* Fundo lilás claro */
+      color: #333; /* Cor do texto */
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      background-color: #d4c3ff; /* Cor de fundo para o container principal */
+      padding: 30px;
+      border-radius: 15px; /* Borda arredondada aumentada */
+      margin: 20px auto;
+      max-width: 800px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra mais visível */
+    }
+
+    h1 {
+      color: #8e24aa; /* Cor do título */
+      font-size: 32px; /* Tamanho maior para o título */
+      text-align: center; /* Centralizar o título */
+      margin-bottom: 20px; /* Espaçamento inferior maior */
+    }
+
+    p {
+      color: #6b47a3; /* Cor do texto normal */
+      line-height: 1.6; /* Espaçamento entre linhas aumentado */
+      margin-bottom: 20px; /* Espaçamento inferior maior para parágrafos */
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background-color: #e1d2ff; /* Cor de fundo para os itens da lista */
+      margin-bottom: 15px; /* Espaçamento entre itens da lista aumentado */
+      padding: 20px; /* Espaçamento interno para destacar mais os itens da lista */
+      border-radius: 10px; /* Borda arredondada para os itens da lista */
+      transition: background-color 0.3s ease; /* Transição suave de cor de fundo */
+      display: flex; /* Alinhamento flexível para os itens da lista */
+      align-items: center; /* Alinhar verticalmente os itens da lista */
+    }
+
+    li:nth-child(odd) {
+      background-color: #c1a5ff; /* Cor de fundo para linhas ímpares */
+    }
+
+    li:nth-child(even) {
+      background-color: #a68def; /* Cor de fundo para linhas pares */
+    }
+
+    li:hover {
+      background-color: #8e24aa; /* Cor de fundo ao passar o mouse sobre os itens */
+      color: white; /* Cor do texto ao passar o mouse sobre os itens */
+    }
+
+  .container
+
+  h1 Genre: #{genre.name}
+
+  div(style='margin-left:20px;margin-top:20px')
+
+    h4 Books
+
+    dl
+    each book in genre_books
+      dt
+        a(href=book.url) #{book.title}
+      dd #{book.summary}
+
+    else
+      p This genre has no books.
+
+  hr
+  p
+    a(href=genre.url+'/delete') Delete genre
+  p
+    a(href=genre.url+'/update') Update genre

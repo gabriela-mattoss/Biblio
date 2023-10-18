@@ -1,0 +1,85 @@
+extends layout
+
+block content
+  style.
+    body {
+      background-color: #e3d7ff; 
+      color: #333; 
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      background-color: #d4c3ff; 
+      padding: 30px;
+      border-radius: 15px; 
+      margin: 20px auto;
+      max-width: 800px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); 
+    }
+
+    h1 {
+      color: #8e24aa; 
+      font-size: 32px; 
+      text-align: center; 
+      margin-bottom: 20px; 
+    }
+
+    p {
+      color: #6b47a3; 
+      line-height: 1.6; 
+      margin-bottom: 20px; 
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background-color: #e1d2ff; 
+      margin-bottom: 15px; 
+      padding: 20px; 
+      border-radius: 10px; 
+      transition: background-color 0.3s ease;
+      display: flex;
+      align-items: center; 
+    }
+
+    li:nth-child(odd) {
+      background-color: #c1a5ff; 
+    }
+
+    li:nth-child(even) {
+      background-color: #a68def; 
+    }
+
+    li:hover {
+      background-color: #8e24aa; 
+      color: white; 
+    }
+
+
+  .container
+
+  h1 ID: #{bookinstance._id}
+
+  p #[strong Title:]
+    a(href=bookinstance.book.url) #{bookinstance.book.title}
+  p #[strong Imprint:] #{bookinstance.imprint}
+
+  p #[strong Status:]
+    if bookinstance.status=='Available'
+      span.text-success #{bookinstance.status}
+    else if bookinstance.status=='Maintenance'
+      span.text-danger #{bookinstance.status}
+    else
+      span.text-warning #{bookinstance.status}
+
+  if bookinstance.status!='Available'
+    p #[strong Due back:] #{bookinstance.due_back_formatted}
+
+  hr
+  p
+    a(href=bookinstance.url+'/delete') Delete BookInstance
+  p
+    a(href=bookinstance.url+'/update') Update BookInstance

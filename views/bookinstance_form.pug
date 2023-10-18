@@ -1,0 +1,91 @@
+extends layout
+
+block content
+  style.
+    body {
+      background-color: #e3d7ff; 
+      color: #333; 
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      background-color: #d4c3ff; /
+      padding: 30px;
+      border-radius: 15px; 
+      margin: 20px auto;
+      max-width: 800px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); 
+    }
+
+    h1 {
+      color: #8e24aa; 
+      font-size: 32px; 
+      text-align: center; 
+      margin-bottom: 20px; 
+    }
+
+    p {
+      color: #6b47a3; 
+      line-height: 1.6; 
+      margin-bottom: 20px; 
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background-color: #e1d2ff; 
+      margin-bottom: 15px; 
+      padding: 20px; 
+      border-radius: 10px; 
+      transition: background-color 0.3s ease;
+      display: flex; 
+      align-items: center; 
+
+    li:nth-child(odd) {
+      background-color: #c1a5ff; 
+    }
+
+    li:nth-child(even) {
+      background-color: #a68def; 
+    }
+
+    li:hover {
+      background-color: #8e24aa; 
+      color: white; 
+    }
+
+  .container
+  h1=title
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='book') Book:
+      select#book.form-control(type='select', placeholder='Select book' name='book' required='true' )
+        - book_list.sort(function(a, b) {let textA = a.title.toUpperCase(); let textB = b.title.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        for book in book_list
+          option(value=book._id, selected=(selected_book==book._id.toString() ? 'selected' : false) ) #{book.title}
+
+    div.form-group
+      label(for='imprint') Imprint:
+      input#imprint.form-control(type='text', placeholder='Publisher and date information' name='imprint' required='true' value=(undefined===bookinstance ? '' : bookinstance.imprint) )
+    div.form-group
+      label(for='due_back') Date when book available:
+      input#due_back.form-control(type='date', name='due_back' value=(undefined===bookinstance ? '' : bookinstance.due_back_yyyy_mm_dd))
+
+    div.form-group
+      label(for='status') Status:
+      select#status.form-control(type='select', placeholder='Select status' name='status' required='true' )
+        option(value='Maintenance' selected=(undefined===bookinstance || bookinstance.status!='Maintenance' ? false:'selected')) Maintenance
+        option(value='Available' selected=(undefined===bookinstance || bookinstance.status!='Available' ? false:'selected')) Available
+        option(value='Loaned' selected=(undefined===bookinstance || bookinstance.status!='Loaned' ? false:'selected')) Loaned
+        option(value='Reserved' selected=(undefined===bookinstance || bookinstance.status!='Reserved' ? false:'selected')) Reserved
+
+    button.btn.btn-primary(type='submit') Submit
+
+  if errors
+    ul
+      for error in errors
+        li!= error.msg
